@@ -1,0 +1,45 @@
+server:
+  port: 8080 # 项目运行端口，默认 8080
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB # 限制单个上传文件的最大大小为 10MB。如果上传的文件大小超过这个值，将会被拒绝上传。
+      max-request-size: 10MB # 限制整个上传请求的最大大小为 10MB。这包括所有上传文件的大小之和。如果请求总大小超过这个值，将会被拒绝。
+  profiles:
+    # 默认激活 dev 环境
+    active: dev
+  datasource:
+    #    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    #    url: jdbc:p6spy:mysql://localhost:3306/weblog
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.17.0.1:3306/weblog
+    username: root
+    password: 123456
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: Weblog-HikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+  security:
+    user:
+      name: admin # 登录用户名
+      password: 123456 # 登录密码
+jwt:
+  issuer: twentygao #签收人
+  #密钥
+  secret: oCZBHQ4B8ABQTWjhkKUy5hxAyElBgk0RVspPd4wIzfdBhqVUJGie5w3AaDZLUuCfiiHhaodhtApM2fErcU7uKg==
+  # token 过期时间（单位：分钟） 24*60
+  tokenExpireTime: 1440
+  # token 请求头中的 key 值
+  tokenHeaderKey: Authorization
+  # token 请求头中的 value 值前缀
+  tokenPrefix: Bearer
+minio:
+  endpoint: http://121.41.106.177/:9000
+  accessKey: twentygao
+  secretKey: twentygao
+  bucketName: weblog
